@@ -1,7 +1,6 @@
 pipeline {
-	agent { 
-        label 'jenkins-worker-dif-tkgi' 
-    }
+	agent any
+    
     environment {
 
         TKGI_ENDPOINT = "gtcstgvkstka001.globetel.com"
@@ -12,19 +11,6 @@ pipeline {
     }
 
     stages {
-
-        stage('Code Checkout') {
-            steps {
-                checkout([  
-                    $class: 'GitSCM', 
-                    branches: [[name: "master"]],
-                    doGenerateSubmoduleConfigurations: false, 
-                    extensions: [], 
-                    submoduleCfg: [], 
-                    userRemoteConfigs: [[credentialsId: 'satkgiharbor', url: 'https://github.com/acebern/CaaS-TKGI_Test-Deployment.git']]
-                    ])
-            }
-        }  
 
         stage('Prepare') {
             steps {
