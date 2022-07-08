@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-janine-deployment
+  name: nginx-test-deployment
   labels:
     app: nginx
 spec:
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: GTCPRDVKSHARBOR.globetel.com/testproject2/nginx:latest
+        image: GTCSTGVKSTHR001.globetel.com/testproject2/nginx:latest
         ports:
         - containerPort: 80
