@@ -37,12 +37,7 @@ pipeline {
                         sudo chmod +x tkgi-get-credentials.sh
                         sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
-                        tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
-                        tkgi clusters
-
-                        sudo ./tkgi-get-credentials.sh $PASSWORD
-
-                        sudo docker login -u tkgiadmin $HARBOR_ENDPOINT -p $PASSWORD
+                        sudo docker login -u tkgiadmiadmin $HARBOR_ENDPOINT -p $PASSWORD
                         sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
                         sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
 
@@ -55,6 +50,10 @@ pipeline {
         stage('Test Deploy') {
             steps {
                 sh '''
+                    tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
+                    tkgi clusters
+
+                    sudo ./tkgi-get-credentials.sh $PASSWORD
                     kubectl apply -f deployment.yaml
                     sleep 10s
                     kubectl get pods -o wide
