@@ -17,7 +17,6 @@ pipeline {
                 withCredentials([file(credentialsId: 'harbor-cert', variable: 'HARBOR_CERT')]) 
                 {
                     sh '''
-                        sudo -i -p BNEm@tt3r
                         sudo yum install expect -y
                         sudo docker pull nginx
                         sudo mkdir -p /etc/docker/certs.d/$HARBOR_ENDPOINT
