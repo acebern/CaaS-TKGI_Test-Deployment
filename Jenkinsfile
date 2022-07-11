@@ -17,7 +17,6 @@ pipeline {
                 withCredentials([file(credentialsId: 'harbor-cert', variable: 'HARBOR_CERT')]) 
                 {
                     sh '''
-                        docker pull nginx
                         sudo mkdir -p /etc/docker/certs.d/$HARBOR_ENDPOINT
                         sudo cp $HARBOR_CERT /etc/docker/certs.d/$HARBOR_ENDPOINT/ca.crt
 
@@ -36,7 +35,7 @@ pipeline {
                         ls -al
 
                         chmod +x tkgi-get-credentials.sh
-                        -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
+                        sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
                         tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
                         tkgi clusters
@@ -45,9 +44,9 @@ pipeline {
 
                         kubectl get nodes
 
-                        docker login -u tkgiadmin $HARBOR_ENDPOINT -p $PASSWORD
-                        docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
-                        docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
+                        sudo docker login -u tkgiadmin $HARBOR_ENDPOINT -p $PASSWORD
+                        sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
+                        sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
 
                     '''    
                 }     
