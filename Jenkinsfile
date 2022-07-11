@@ -6,7 +6,7 @@ pipeline {
         TKGI_ENDPOINT = "gtcstgvkstka001.globetel.com"
         HARBOR_ENDPOINT = "GTCSTGVKSTHR001.globetel.com"
         CLUSTER_ENDPOINT = "testproject.globetel.com"
-        MASTER_IP = "10.25.164.10"
+        MASTER_IP = "10.25.164.21"
 
     }
 
@@ -56,7 +56,7 @@ pipeline {
                         tkgi clusters
 
                         sudo ./tkgi-get-credentials.sh $PASSWORD
-                        
+
                         kubectl apply -f deployment.yaml
                         sleep 10s
                         kubectl get pods -o wide
