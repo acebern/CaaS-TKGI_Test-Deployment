@@ -31,7 +31,7 @@ pipeline {
 
         stage('Cluster Authentication and Image Push to Harbor') {
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'devopsadmin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) 
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'tkgiadmin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) 
                 {
                     sh '''
 
@@ -47,7 +47,7 @@ pipeline {
 
                         kubectl get nodes
 
-                        sudo docker login -u devopsadmin $HARBOR_ENDPOINT -p $PASSWORD
+                        sudo docker login -u tkgiadmin $HARBOR_ENDPOINT -p $PASSWORD
                         sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
                         sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
 
