@@ -42,8 +42,6 @@ pipeline {
 
                         sudo ./tkgi-get-credentials.sh $PASSWORD
 
-                        /usr/local/bin/kubectl get nodes
-
                         sudo docker login -u tkgiadmin $HARBOR_ENDPOINT -p $PASSWORD
                         sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
                         sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
@@ -57,9 +55,9 @@ pipeline {
         stage('Test Deploy') {
             steps {
                 sh '''
-                    /usr/local/bin/kubectl apply -f deployment.yaml
+                    kubectl apply -f deployment.yaml
                     sleep 10s
-                    /usr/local/bin/kubectl get pods -o wide
+                    kubectl get pods -o wide
 
                 '''    
             }
