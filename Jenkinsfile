@@ -37,8 +37,8 @@ pipeline {
                         sudo chmod +x tkgi-get-credentials.sh
                         sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
-                        sudo tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
-                        sudo tkgi clusters
+                        tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
+                        tkgi clusters
 
                         sudo ./tkgi-get-credentials.sh $PASSWORD
 
