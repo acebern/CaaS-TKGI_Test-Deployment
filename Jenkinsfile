@@ -28,28 +28,24 @@ pipeline {
 
         stage('Cluster Authentication and Image Push to Harbor') {
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'tkgiadmin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) 
-                {
-                    sh '''
+                sh '''
 
-                        ls -al
+                    ls -al
 
-                        sudo chmod +x tkgi-get-credentials.sh
-                        sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
+                    sudo chmod +x tkgi-get-credentials.sh
+                    sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
-                        tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
-                        tkgi clusters
+                    tkgi login -a $TKGI_ENDPOINT -u admin -k -p w72UTkmdbDEaDDGpSoDFT7i-66LZZtCc
 
-                        sudo ./tkgi-get-credentials.sh $PASSWORD
+                    tkgi clusters
 
-                        kubectl get nodes
+                    kubectl get nodes
 
-                        sudo docker login -u tkgiadmin $HARBOR_ENDPOINT -p $PASSWORD
-                        sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
-                        sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
+                    sudo docker login -u tkgiadmin $HARBOR_ENDPOINT -p w72UTkmdbDEaDDGpSoDFT7i-66LZZtCc
+                    sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
+                    sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
 
-                    '''    
-                }     
+                '''        
             }
         }
 
