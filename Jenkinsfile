@@ -49,16 +49,20 @@ pipeline {
 
         stage('Test Deploy') {
             steps {
-                sh '''
-                    tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
-                    tkgi clusters
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'tkgiadmin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) 
+                {
+                    sh '''
+                        tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
+                        tkgi clusters
 
-                    sudo ./tkgi-get-credentials.sh $PASSWORD
-                    kubectl apply -f deployment.yaml
-                    sleep 10s
-                    kubectl get pods -o wide
+                        sudo ./tkgi-get-credentials.sh $PASSWORD
+                        
+                        kubectl apply -f deployment.yaml
+                        sleep 10s
+                        kubectl get pods -o wide
 
-                '''    
+                    '''    
+                }  
             }
         }
     }
