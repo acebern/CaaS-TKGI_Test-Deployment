@@ -37,7 +37,7 @@ pipeline {
                         sudo chmod +x tkgi-get-credentials.sh
                         sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
-                        sudo docker login -u tkgiadmiadmin $HARBOR_ENDPOINT -p $PASSWORD
+                        sudo docker login -u $USERNAME $HARBOR_ENDPOINT -p $PASSWORD
                         sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
                         sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
 
