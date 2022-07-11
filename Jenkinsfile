@@ -34,7 +34,6 @@ pipeline {
 
                         ls -al
 
-                        sudo export PATH=/usr/local/bin:$PATH
                         sudo chmod +x tkgi-get-credentials.sh
                         sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
