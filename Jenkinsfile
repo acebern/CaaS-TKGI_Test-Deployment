@@ -17,8 +17,7 @@ pipeline {
                 withCredentials([file(credentialsId: 'harbor-cert', variable: 'HARBOR_CERT')]) 
                 {
                     sh '''
-                        sudo yum install expect -y
-                        sudo docker pull nginx
+                        docker pull nginx
                         sudo mkdir -p /etc/docker/certs.d/$HARBOR_ENDPOINT
                         sudo cp $HARBOR_CERT /etc/docker/certs.d/$HARBOR_ENDPOINT/ca.crt
 
@@ -46,9 +45,9 @@ pipeline {
 
                         kubectl get nodes
 
-                        sudo docker login -u tkgiadmin $HARBOR_ENDPOINT -p $PASSWORD
-                        sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
-                        sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
+                        docker login -u tkgiadmin $HARBOR_ENDPOINT -p $PASSWORD
+                        docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
+                        docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
 
                     '''    
                 }     
