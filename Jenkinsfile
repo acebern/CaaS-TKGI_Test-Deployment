@@ -5,8 +5,8 @@ pipeline {
 
         TKGI_ENDPOINT = "gtcstgvkstka001.globetel.com"
         HARBOR_ENDPOINT = "GTCSTGVKSTHR001.globetel.com"
-        CLUSTER_ENDPOINT = "testproject.globetel.com"
-        MASTER_IP = "10.25.164.21"
+        CLUSTER_ENDPOINT = "testsecond.dif.globetel.com"
+        MASTER_IP = "10.25.164.3"
 
     }
 
@@ -36,7 +36,7 @@ pipeline {
     
                         sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
-                        sudo docker login -u admin $HARBOR_ENDPOINT -p 27c3@=Ecas
+                        sudo docker login -u $USERNAME $HARBOR_ENDPOINT -p $PASSWORD
                         sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
                         sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
 
