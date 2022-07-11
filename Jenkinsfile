@@ -5,8 +5,8 @@ pipeline {
 
         TKGI_ENDPOINT = "gtcstgvkstka001.globetel.com"
         HARBOR_ENDPOINT = "GTCSTGVKSTHR001.globetel.com"
-        CLUSTER_ENDPOINT = "nonProdTestCluster.dif.globetel.com"
-        MASTER_IP = "10.25.164.22"
+        CLUSTER_ENDPOINT = "testproject.globetel.com"
+        MASTER_IP = "10.25.164.10"
 
     }
 
@@ -37,12 +37,12 @@ pipeline {
                         sudo chmod +x tkgi-get-credentials.sh
                         sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
-                        sudo tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
-                        sudo tkgi clusters
+                        tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
+                        tkgi clusters
 
-                        sudo ./tkgi-get-credentials.sh $PASSWORD
+                        ./tkgi-get-credentials.sh $PASSWORD
 
-                        sudo kubectl get nodes
+                        kubectl get nodes
 
                         sudo docker login -u tkgiadmin $HARBOR_ENDPOINT -p $PASSWORD
                         sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
@@ -57,9 +57,9 @@ pipeline {
         stage('Test Deploy') {
             steps {
                 sh '''
-                    sudo kubectl apply -f deployment.yaml
+                    kubectl apply -f deployment.yaml
                     sleep 10s
-                    sudo kubectl get pods -owide
+                    kubectl get pods -owide
 
                 '''    
             }
