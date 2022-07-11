@@ -53,7 +53,6 @@ pipeline {
                     sh '''
                         sudo chmod +x tkgi-get-credentials.sh
                         tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
-                        tkgi clusters
 
                         sudo ./tkgi-get-credentials.sh $PASSWORD
 
