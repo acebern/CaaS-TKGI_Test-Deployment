@@ -1,6 +1,6 @@
 #!/bin/bash
 /usr/bin/expect <<EOD
-spawn tkgi get-credentials testCluster2
+spawn tkgi get-credentials testproject
 expect "Password"
 send "$1\n"
 expect eof
