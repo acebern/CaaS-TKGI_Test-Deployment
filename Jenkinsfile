@@ -34,13 +34,14 @@ pipeline {
 
                         ls -al
 
+                        sudo export PATH=/usr/local/bin:$PATH
                         sudo chmod +x tkgi-get-credentials.sh
                         sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
-                        tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
-                        tkgi clusters
+                        sudo tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
+                        sudo tkgi clusters
 
-                        ./tkgi-get-credentials.sh $PASSWORD
+                        sudo ./tkgi-get-credentials.sh $PASSWORD
 
                         kubectl get nodes
 
