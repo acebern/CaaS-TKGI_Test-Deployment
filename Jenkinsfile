@@ -6,7 +6,7 @@ pipeline {
         TKGI_ENDPOINT = "gtcstgvkstka001.globetel.com"
         HARBOR_ENDPOINT = "GTCSTGVKSTHR001.globetel.com"
         CLUSTER_ENDPOINT = "testsecond.dif.globetel.com"
-        MASTER_IP = "10.25.164.3"
+        MASTER_IP = "10.25.164.4"
 
     }
 
