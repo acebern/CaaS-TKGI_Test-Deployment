@@ -48,6 +48,7 @@ pipeline {
                     sh '''
                         sudo chmod +x tkgi-get-credentials.sh
                         tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
+                        tkgi clusters
                         sudo ./tkgi-get-credentials.sh $PASSWORD
                         kubectl apply -f deployment.yaml --context testCluster
                         sleep 10s
