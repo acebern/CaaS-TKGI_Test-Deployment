@@ -32,7 +32,6 @@ pipeline {
                     ls -al
 
                     sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
-
                     sudo docker login -u admin $HARBOR_ENDPOINT -p 27c3@=Ecas
                     sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
                     sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
@@ -49,13 +48,11 @@ pipeline {
                     sh '''
                         sudo chmod +x tkgi-get-credentials.sh
                         tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
-
                         sudo ./tkgi-get-credentials.sh $PASSWORD
-
                         kubectl apply -f deployment.yaml
                         sleep 10s
                         kubectl get pods -o wide
-
+                        
                     '''    
                 }  
             }
