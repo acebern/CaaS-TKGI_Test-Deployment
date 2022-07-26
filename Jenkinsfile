@@ -28,32 +28,38 @@ pipeline {
 
         stage('Cluster Authentication and Image Push to Harbor') {
             steps {
-                sh '''
-                    ls -al
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'tkgiadmin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) 
+                {
+                    sh '''
+                        ls -al
 
-                    sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
-                    sudo docker login -u admin $HARBOR_ENDPOINT -p 27c3@=Ecas
-                    sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
-                    sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
+                        chmod +x tkgi-get-credentials.sh
+                        sudo -- sh -c -e "echo $MASTER_IP $CLUSTER_ENDPOINT >> /etc/hosts"
 
-                '''        
+                        tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
+                        tkgi clusters
+
+                        ./tkgi-get-credentials.sh $PASSWORD
+
+                        kubectl get nodes
+
+                        sudo docker login -u devopsadmin $HARBOR_ENDPOINT -p $PASSWORD
+                        sudo docker tag nginx:latest $HARBOR_ENDPOINT/testproject2/nginx:latest
+                        sudo docker push $HARBOR_ENDPOINT/testproject2/nginx:latest
+
+                    '''
+                }         
             }
         }
 
 
         stage('Test Deploy') {
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'tkgiadmin', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) 
-                {
-                    sh '''
-                        sudo chmod +x tkgi-get-credentials.sh
-                        tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
-                        tkgi clusters
-                        sudo ./tkgi-get-credentials.sh $PASSWORD
-
-
-                    '''    
-                }  
+                sh '''
+ 
+                    sleep 10s
+                    kubectl get pods -owide
+                '''     
             }
         }
     }
