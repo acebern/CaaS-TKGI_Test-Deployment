@@ -50,10 +50,7 @@ pipeline {
                         tkgi login -a $TKGI_ENDPOINT -u $USERNAME -k -p $PASSWORD
                         tkgi clusters
                         sudo ./tkgi-get-credentials.sh $PASSWORD
-                        kubectl config use-context testCluster
-                        kubectl apply -f deployment.yaml
-                        sleep 10s
-                        kubectl get pods -o wide
+
 
                     '''    
                 }  
