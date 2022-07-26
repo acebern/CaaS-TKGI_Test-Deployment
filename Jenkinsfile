@@ -56,7 +56,7 @@ pipeline {
         stage('Test Deploy') {
             steps {
                 sh '''
- 
+                    kubectl apply -f deployment.yaml
                     sleep 10s
                     kubectl get pods -owide
                 '''     
